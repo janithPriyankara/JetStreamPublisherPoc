@@ -33,23 +33,28 @@ public class Main {
     String password = "vvNGFu3HRk3PMjZHsztlsCZ9MoUwTGzR";
     String host = "0.0.0.0";
     String port = "37733";
-    String streamName = "test_stream";
-    String subjectName = "test_subject_1";
+    String streamName = "test_stream_1";
+    String subjectName = "nextgen_2";
 
 
     Connection nc = Nats.connect("nats://"+userName+":"+password+ "@"+host+":"+port);
     JetStream js = nc.jetStream();
 
-    LocalTime currentTime = LocalTime.now();
-    String timeStamp = currentTime.toString();
-
-    byte[] messsageBytes = ("mock message from publisher "+ timeStamp).getBytes(StandardCharsets.UTF_8);
     PublishOptions po = PublishOptions.builder()
         .stream(streamName)
         .build();
 
-    for (int i = 0; i <10;i++){
+    for (int i = 0; i <45;i++){
+
+      LocalTime currentTime = LocalTime.now();
+      String timeStamp = currentTime.toString();
+
+
+      String message = ( "{\"GATEWAY_ID\" : \"gateway_1\", \"eventType\" : \"ADD_GATEWAY\", \"GATEWAY_HOST\":\"localhost\", \"GATEWAY_PORT\" : \""+5000+i+"\"}");
+      byte[] messsageBytes = message.getBytes(StandardCharsets.UTF_8);
       PublishAck pa = js.publish(subjectName, messsageBytes, po);
+      System.out.println(message);
+      System.out.println(pa);
     }
 
 
