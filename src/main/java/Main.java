@@ -44,13 +44,13 @@ public class Main {
         .stream(streamName)
         .build();
 
-    for (int i = 0; i <45;i++){
+    for (int i = 1; i <46;i++){
 
       LocalTime currentTime = LocalTime.now();
       String timeStamp = currentTime.toString();
 
 
-      String message = ( "{\"GATEWAY_ID\" : \"gateway_1\", \"eventType\" : \"ADD_GATEWAY\", \"GATEWAY_HOST\":\"localhost\", \"GATEWAY_PORT\" : \""+5000+i+"\"}");
+      String message = ( "{\"GATEWAY_ID\" : \"gateway_"+i+"\", \"eventType\" : \"ADD_GATEWAY\", \"GATEWAY_HOST\":\"localhost\", \"GATEWAY_PORT\" : \""+500+i+"\"}");
       byte[] messsageBytes = message.getBytes(StandardCharsets.UTF_8);
       PublishAck pa = js.publish(subjectName, messsageBytes, po);
       System.out.println(message);
